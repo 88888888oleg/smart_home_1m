@@ -33,8 +33,21 @@ class _TestDeviceScreenState extends State<TestDeviceScreen> {
       body: SafeArea(child: SingleChildScrollView(
         child: Column(
           children: [
-            Center(child: Text('Входящий канал, получает состояние из устройства, по умолчанию 35, может полчать тип(градусы, влажность и т.п.)',style: TextStyle(fontSize: 20),)),
-            Center(child: StateUiWidget(valueFromDevice: Provider.of<TestDeviceProvider>(context, listen: true).getThermometrValue())),
+            Center(child: Text('Входящий канал, получает состояние из устройства, по умолчанию 35, может полчать тип(градусы, влажность и т.п.). Введено условие для отображения, кнопка ниже устанвливает isActive = 0 и сущность не отображается. ',style: TextStyle(fontSize: 20),)),
+            if(Provider.of<TestDeviceProvider>(context, listen: false).instanceState.idUi == 0 && Provider.of<TestDeviceProvider>(context, listen: false).instanceState.isActive == 1) Center(child: StateUiWidget(valueFromDevice: Provider.of<TestDeviceProvider>(context, listen: true).getThermometrValue())),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Center(
+                child: Container(child: TextButton(style: ButtonStyle(backgroundColor:MaterialStateProperty.all(Colors.lightBlue)),
+                  onPressed: (){
+                    setState(() {
+                      Provider.of<TestDeviceProvider>(context, listen: false).disableEntity();
+                    });
+
+                  }, child: Text('Клик для отключения устройства',style: TextStyle(fontSize: 25),),) ,),
+              ),
+            ),
+
             Center(child: Text('Слайдер, при изменении пользователем через 10 сек получает состояние из устройства, по умолчанию 25',style: TextStyle(fontSize: 20),)),
             SlyderWithButtons(callback:  Provider.of<TestDeviceProvider>(context, listen: false).changeSliderValue,
               currentSliderValue: Provider.of<TestDeviceProvider>(context, listen: true).slyderValue,

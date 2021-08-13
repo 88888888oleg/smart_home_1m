@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/widgets.dart';
@@ -38,10 +37,11 @@ class TestDeviceProvider with ChangeNotifier implements Device  {
     Generator.instance.stateDevices.add(instanceOffButton);
     Generator.instance.stateDevices.add(instanceOffButton1);
     Generator.instance.stateDevices.add(instanceStopButton);
+    Generator.instance.stateDevices.add(instanceImpulseButton);
 
     Generator.instance.printReport();
   }
-
+////////////////////////////////////////////////
   ImpulseButton instanceImpulseButton;
   double simpleTime = 25;
   void sendImpulseButton() {
@@ -52,6 +52,10 @@ class TestDeviceProvider with ChangeNotifier implements Device  {
   double thermometrValue = 20.0;
   double getThermometrValue(){
     return instanceState.toUiState;
+  }
+  void disableEntity(){
+    instanceState.isActive = 0;
+    notifyListeners();
   }
 /////////////////////////////////////////
   StopButton instanceStopButton;
@@ -141,7 +145,6 @@ void onFunction4() {
   void getSlyderValue() {
      toUiSlyderValue =  instance.toUiState;
      slyderValue = toUiSlyderValue;
-     print('slyderValue = $slyderValue');
      notifyListeners();
      print(toUiSlyderValue);
   }
@@ -169,18 +172,6 @@ void onFunction4() {
     instance1.printReport();
     notifyListeners();
   }
-//   ////////////////////////////////////
-// Slyder instance2;
-//   var slyderValue2 = 0.0;
-//   var toUiSlyderValue2 = 0.0;
-//
-//   void changeSliderValue2 (double value) {
-//     slyderValue2 = value;
-//     instance2.fromUiState = value;
-//     instance2.printReport();
-//     notifyListeners();
-//   }
-//
 // ///////////////////////////////////// temp functions
 void setInputState(){
     if(instance1.idUi == 1) {
@@ -197,7 +188,5 @@ void setInputState(){
     print('start timer');
      timer = Timer(tenSeconds, () => callback());
   }
-
-  void initListSlyders() => Generator.instance.printReport();
 
 }

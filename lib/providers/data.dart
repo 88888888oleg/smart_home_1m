@@ -18,7 +18,7 @@ class Data with ChangeNotifier {
     Generator.instance.genValue.listen((event) {
       setGenValue(event);
       timeValue = DateTime.now().second;
-      print('$genValue - ${DateTime.now().second}');
+      //print('$genValue - ${DateTime.now().second}');
     });
   }
 
